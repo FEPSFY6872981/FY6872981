@@ -122,13 +122,18 @@
   Verify Last Modified Time
 </button>
 
+<div id="last-updated">Loading last update time...</div>
+
+<button onclick="verifyLastUpdatedTime()" style="display: block; margin: 10px auto; padding: 8px 16px;">
+  Verify Last Modified Time
+</button>
+
 <script>
   async function getLastUpdatedTime() {
-    const username = 'FEPSFY6872981'
-    const repo = 'FY6872981'
-    
-    const url = 'https://api.github.com/repos/${FEPSFY6872981}/${FY6872981}commits';
-    
+    const username = 'FEPSFY6872981';
+    const repo = 'FY6872981';
+    const url = `https://api.github.com/repos/${username}/${repo}/commits`;
+
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -136,32 +141,33 @@
           'Accept': 'application/vnd.github.v3+json',
         }
       });
-      
+
       if (!response.ok) {
-        throw new Error('Error fetching data: ${response.status} - ${response.statusText}');
+        throw new Error(`Error fetching data: ${response.status} - ${response.statusText}`);
       }
-      
+
       const commits = await response.json();
       if (commits && commits.length > 0) {
-        const lastCommitDate = new Date(coomits[0].commit.committer.date);
-        
-        document.getElementById('last-updated').innerText = 'Last Modified Time: ${lastCommitDate.toLocalString()}';
+        const lastCommitDate = new Date(commits[0].commit.committer.date);
+        document.getElementById('last-updated').innerText = `Last Modified Time: ${lastCommitDate.toLocaleString()}`;
       } else {
-        document.getElementById('last-updated').innerText = 'No commits found in repository';
+        document.getElementById('last-updated').innerText = 'No commits found in the repository.';
       }
     } catch (error) {
       console.error('Error fetching last updated time:', error);
-      document.getElementById('last-updated').innerText = 'Error fetching updated time. Please check the repository details.';
+      document.getElementById('last-updated').innerText = 'Error fetching update time. Please check the repository details.';
     }
   }
-  
+
   async function verifyLastUpdatedTime() {
     document.getElementById('last-updated').innerText = 'Verifying...';
-    await get getLastUpdatedTime();
-    alert("Last modified time has been sucessfully verified from GitHub API.");
+    await getLastUpdatedTime();
+    alert("Last modified time has been successfully verified from GitHub API.");
   }
+
   window.onload = getLastUpdatedTime;
 </script>
+
     
 
     <div class="toc">
