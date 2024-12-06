@@ -115,6 +115,12 @@
 
     <video src="AI video.mp4" width="800" height="450" controls>
     </video>
+    
+<div id="last-updated">Loading last update time...</div>
+
+<button onclick="verifyLastUpdatedTime()" style="display: block; margin: 10px auto; padding: 8px 16px;">
+  Verify Last Modified Time
+</button>
 
 <script>
   async function getLastUpdatedTime() {
@@ -155,6 +161,7 @@
 
   window.onload = getLastUpdatedTime;
 </script>
+
 
     
 
